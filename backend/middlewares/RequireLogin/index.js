@@ -1,4 +1,3 @@
-const jwt_key = 'this-is-my-secret-key-for-json-web-tokens-that-i-made'
 const jwt = require('jsonwebtoken');
 
 

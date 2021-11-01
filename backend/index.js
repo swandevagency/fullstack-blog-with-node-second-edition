@@ -14,6 +14,9 @@ mongoose.connect("mongodb://localhost:27017/node-backend", { useNewUrlParser: tr
   err => { console.log('Can not connect to the database'+ err)}
 );
 
+// setting the global variables
+global.jwt_key = 'this-is-my-secret-key-for-json-web-tokens-that-i-made'
+
 // middlewares essentials
 
 app.use(cors());

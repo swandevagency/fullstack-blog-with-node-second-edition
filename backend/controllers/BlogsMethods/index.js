@@ -1,24 +1,25 @@
 const mongoose = require("mongoose");
-require('../../../models/index')
+require('../../models/index');
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+// sending blogs page mounting information function
 
-const blogPageMountingInfo = (req,res) => {
-  mongoose.model('Blog').find({},(err, result) =>{
-      if(err){
-        console.log(err)
-        console.log(req)
-      }
-      else{
-        const data = result
-        res.send(data)
-      }
+const blogPageMountingInfo = async (req,res) => {
+  const blogs = await mongoose.model('Blog').find({})
+  if(!blogs){
+    res.status(500).send({
+      message : "something went wrong"
     })
+    return
+  }
+  res.status(200).send({
+    blogs,
+    message : "blogs array have been sent"
+  })
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+// deleting a blog function
 
 const deleteBlog = async (req, res) =>{
   const _id = req.params.id;
@@ -41,32 +42,32 @@ const deleteBlog = async (req, res) =>{
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// editiong a blog function
 
 
 const editBlog = async (req, res) =>{
-  const _id = req.params.id
+  const _id = req.params.id;
   const blog = await mongoose.model('Blog').findOne({_id})
   if(!blog){
     res.status(404).send({
       message:'this blog does not exist'
     })
     return
-  }
+  };
   try {
-    await mongoose.model('Blog').findByIdAndUpdate(_id, {Title : req.body.Title, Description : req.body.Description})
-    res.send({
-      message: 'succesfully added'
-    })
+    await mongoose.model('Blog').updateOne({_id}, {Title : req.body.Title, Description : req.body.Description});
+    res.status(200).send({
+      message: 'changes applied'
+    });
   } catch (error) {
     console.log(error)
     res.status(500).send({
       message: 'some thing went wrong'
-    })
+    });
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+// storing blog in database
 
 
 const createBlog = (req, res) =>{
@@ -74,9 +75,11 @@ const createBlog = (req, res) =>{
     Title : req.body.Title,
     Description : req.body.Description
   })
-  res.send('added')
+  res.status(200).send({
+    message: "added"
+  })
 }
-//////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 module.exports = {

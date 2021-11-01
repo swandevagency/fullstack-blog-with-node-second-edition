@@ -61,7 +61,7 @@ export default {
         .then(res =>{
             console.log(res.data)
             console.log(res.data[0])
-            this.blogs = res.data
+            this.blogs = res.data.blogs
         })
         this.dearUser = localStorage.getItem('username')
     },
@@ -94,7 +94,7 @@ export default {
             .then(() =>{
                 this.$axios.get('http://localhost:5000/blogs',{headers})
                 .then(res =>{
-                    this.blogs = res.data
+                    this.blogs = res.data.blogs
                 })
             })
         },
@@ -111,7 +111,7 @@ export default {
             }
             this.$axios.get('http://localhost:5000/blogs',{headers})
             .then(res =>{
-                this.blogs = res.data
+                this.blogs = res.data.blogs
             })
             this.letscreate = false//;;
         },
@@ -128,7 +128,7 @@ export default {
             }
             this.$axios.get('http://localhost:5000/blogs',{headers})
             .then(res =>{
-                this.blogs = res.data
+                this.blogs = res.data.blogs
             })
             this.neededit = false
         },

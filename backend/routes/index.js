@@ -9,13 +9,12 @@ const {
     deleteBlog,
     editBlog,
     createBlog
-} = require('../controllers/methods/index');
+} = require('../controllers/index');
 
 const {RequireLogin} = require('../middlewares/index');
 
 
 router1.post('/register',register);
-
 
 router1.post('/login', login);
 
